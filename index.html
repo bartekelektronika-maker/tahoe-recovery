@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone 8 Web</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Bezpośredni przycisk pobierania customowego softu IPSW z Archive.org -->
+    <a href="https://archive.org/download/iphone41_6.1.3_10b329_customj/iPhone4,1_6.1.3_10B329_CustomJ.ipsw" class="top-download-btn" download>
+        📥 Pobierz iOS 6.1.3 Custom
+    </a>
+
+    <div class="logo">iPhone 8 <span>Web</span></div>
+    <div class="engine-subtitle">Napędzane przez nakładkę iPhone 8 UI</div>
+
+    <div class="search-wrapper">
+        <div class="search-box">
+            <input type="text" id="searchInput" class="search-input" placeholder="Szukaj (np. YouTube, tapety)..." autocomplete="off" autofocus>
+            <button type="button" id="searchBtn" class="search-btn">Szukaj</button>
+        </div>
+        
+        <div class="tabs-bar">
+            <div class="tab active" onclick="setTab('all', event)">Wszystko</div>
+            <div class="tab" onclick="setTab('images', event)">Grafika</div>
+            <div class="tab" onclick="setTab('video', event)">Wideo / YouTube</div>
+        </div>
+    </div>
+
+    <div id="results-container"></div>
+
+    <!-- Podpięcie skryptów -->
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
