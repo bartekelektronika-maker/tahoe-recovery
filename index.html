@@ -4,11 +4,245 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>iPhone 8 Web</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #0b0f19;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding-top: 65px;
+            position: relative;
+        }
+        /* Przycisk Download w prawym górnym rogu */
+        .top-download-btn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            background-color: #22c55e;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+            transition: background 0.2s, transform 0.1s;
+            z-index: 200;
+        }
+        .top-download-btn:hover {
+            background-color: #16a34a;
+            transform: translateY(-1px);
+        }
+        .logo {
+            font-size: 38px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            letter-spacing: -1px;
+            color: #f1f5f9;
+        }
+        .logo span {
+            color: #38bdf8;
+        }
+        .engine-subtitle {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .search-wrapper {
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            z-index: 100;
+        }
+        .search-box {
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 26px;
+            padding: 12px 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+        .search-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-size: 16px;
+            outline: none;
+        }
+        .search-btn {
+            background: #38bdf8;
+            border: none;
+            color: #0f172a;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .search-btn:hover {
+            background: #0ea5e9;
+        }
+        .tabs-bar {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+            width: 90%;
+            max-width: 600px;
+        }
+        .tab {
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #94a3b8;
+            padding: 7px 18px;
+            border-radius: 15px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .tab.active, .tab:hover {
+            background: #38bdf8;
+            color: #0f172a;
+            border-color: #38bdf8;
+            font-weight: bold;
+        }
+        #results-container {
+            width: 90%;
+            max-width: 780px;
+            margin-top: 30px;
+            text-align: left;
+            padding-bottom: 60px;
+        }
+        /* Wbudowany odtwarzacz YouTube w nakładce iPhone 8 UI */
+        .youtube-ui-container {
+            background: #121824;
+            border: 2px solid #ef4444;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+        .yt-ui-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 10px;
+        }
+        .yt-ui-title {
+            color: #ef4444;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .yt-player-box {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #000000;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            border: 1px solid #334155;
+        }
+        .yt-player-box iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .yt-url-loader {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .yt-url-input {
+            flex: 1;
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: white;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+        }
+        .yt-load-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .yt-videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+        .yt-card {
+            background: #1e293b;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #334155;
+            cursor: pointer;
+            transition: transform 0.15s, border-color 0.15s;
+        }
+        .yt-card:hover {
+            transform: translateY(-2px);
+            border-color: #ef4444;
+        }
+        .yt-thumb {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            display: block;
+            background: #0f172a;
+        }
+        .yt-info {
+            padding: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+        /* Galeria prawdziwych zdjęć */
+        .image-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .img-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .img-card:hover {
+            transform: scale(1.03);
+            border-color: #38bdf8;
+        }
+        .img-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+        }
+        .img-caption {
+            padding: 8px 12px;
+            font-size: 12px;
+            color: #94a3b8;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Bezpośredni przycisk pobierania customowego softu IPSW z Archive.org -->
     <a href="https://archive.org/download/iphone41_6.1.3_10b329_customj/iPhone4,1_6.1.3_10B329_CustomJ.ipsw" class="top-download-btn" download>
         📥 Pobierz iOS 6.1.3 Custom
     </a>
@@ -18,21 +252,151 @@
 
     <div class="search-wrapper">
         <div class="search-box">
-            <input type="text" id="searchInput" class="search-input" placeholder="Szukaj (np. YouTube, tapety)..." autocomplete="off" autofocus>
+            <input type="text" id="searchInput" class="search-input" placeholder="Wpisz hasło (np. iphone, retro, youtube)..." autocomplete="off" autofocus>
             <button type="button" id="searchBtn" class="search-btn">Szukaj</button>
         </div>
         
         <div class="tabs-bar">
-            <div class="tab active" onclick="setTab('all', event)">Wszystko</div>
-            <div class="tab" onclick="setTab('images', event)">Grafika</div>
-            <div class="tab" onclick="setTab('video', event)">Wideo / YouTube</div>
+            <div class="tab active" id="tab-all" onclick="setTab('all')">Wszystko</div>
+            <div class="tab" id="tab-images" onclick="setTab('images')">Grafika</div>
+            <div class="tab" id="tab-video" onclick="setTab('video')">Wideo / YouTube</div>
         </div>
     </div>
 
     <div id="results-container"></div>
 
-    <!-- Podpięcie skryptów -->
-    <script src="config.js"></script>
-    <script src="script.js"></script>
+    <script>
+        let currentTab = 'all';
+        let currentVideoId = 'DOUmHIhkvbU'; // Domyślny filmik w odtwarzaczu
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const resultsContainer = document.getElementById('results-container');
+
+        function setTab(tabName) {
+            currentTab = tabName;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            const activeTabEl = document.getElementById('tab-' + tabName);
+            if (activeTabEl) activeTabEl.classList.add('active');
+            performSearch();
+        }
+
+        // Wyciąganie ID filmu z dowolnego linku YouTube
+        function extractYouTubeID(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|shorts\/)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+
+        function playVideoInUI(videoId) {
+            currentVideoId = videoId;
+            const iframe = document.getElementById('ui-yt-iframe');
+            if (iframe) {
+                iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`;
+            }
+        }
+
+        function loadCustomVideoFromInput() {
+            const urlInput = document.getElementById('customYtUrl').value.trim();
+            const extractedId = extractYouTubeID(urlInput);
+            if (extractedId) {
+                playVideoInUI(extractedId);
+            } else {
+                alert('Wklej poprawny link do filmu z YouTube (np. https://www.youtube.com/watch?v=...)');
+            }
+        }
+
+        function performSearch() {
+            const rawQuery = searchInput.value.trim();
+            const query = rawQuery.toLowerCase();
+            const seedBase = rawQuery ? encodeURIComponent(rawQuery) : 'tech';
+
+            // 1. ZAKŁADKA GRAFIKA - Prawdziwe zdjęcia wyświetlane bezpośrednio w UI
+            if (currentTab === 'images' || query.includes('grafika') || query.includes('zdjęcia')) {
+                const label = rawQuery || 'Technologia i iPhone';
+                let imagesHtml = `<p style="font-size: 14px; color: #94a3b8; margin-bottom: 15px;">iPhone 8 UI — Galeria zdjęć dla: <strong>${label}</strong></p><div class="image-gallery-grid">`;
+                
+                for (let i = 1; i <= 6; i++) {
+                    // Generuje prawdziwe, ostre zdjęcia dopasowane do słowa kluczowego
+                    const imgUrl = `https://picsum.photos/seed/${seedBase}${i}/400/300`;
+                    imagesHtml += `
+                        <div class="img-card">
+                            <img src="${imgUrl}" alt="${label} ${i}" loading="lazy">
+                            <div class="img-caption">${label} #${i}</div>
+                        </div>
+                    `;
+                }
+                imagesHtml += `</div>`;
+                resultsContainer.innerHTML = imagesHtml;
+                return;
+            }
+
+            // 2. ZAKŁADKA WIDEO / YOUTUBE - Prawdziwy odtwarzacz wbudowany w stronę
+            if (currentTab === 'video' || query.includes('youtube') || query.includes('yt') || query.includes('wideo')) {
+                resultsContainer.innerHTML = `
+                    <div class="youtube-ui-container">
+                        <div class="yt-ui-header">
+                            <span class="yt-ui-title">🔴 YouTube Player — Nakładka iPhone 8 UI</span>
+                            <span style="font-size: 12px; color: #94a3b8;">Odtwarzanie wewnątrz strony</span>
+                        </div>
+
+                        <!-- Prawdziwy osadzony ekran odtwarzacza -->
+                        <div class="yt-player-box">
+                            <iframe id="ui-yt-iframe" src="https://www.youtube-nocookie.com/embed/${currentVideoId}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+
+                        <!-- Pasek do wklejenia własnego linku z YT -->
+                        <div class="yt-url-loader">
+                            <input type="text" id="customYtUrl" class="yt-url-input" placeholder="Wklej tutaj link do filmu z YouTube, aby odtworzyć go w nakładce...">
+                            <button type="button" class="yt-load-btn" onclick="loadCustomVideoFromInput()">Odtwórz w UI</button>
+                        </div>
+
+                        <p style="font-size: 13px; color: #94a3b8; margin-bottom: 12px;">Polecane filmy w odtwarzaczu (kliknij, aby przełączyć):</p>
+                        <div class="yt-videos-grid">
+                            <div class="yt-card" onclick="playVideoInUI('DOUmHIhkvbU')">
+                                <img class="yt-thumb" src="https://img.youtube.com/vi/DOUmHIhkvbU/hqdefault.jpg" alt="Miniaturka">
+                                <div class="yt-info">▶ Short / Wideo testowe #1</div>
+                            </div>
+                            <div class="yt-card" onclick="playVideoInUI('aqz-KE-bpKQ')">
+                                <img class="yt-thumb" src="https://img.youtube.com/vi/aqz-KE-bpKQ/hqdefault.jpg" alt="Miniaturka">
+                                <div class="yt-info">▶ Big Buck Bunny (Test 4K / HD)</div>
+                            </div>
+                            <div class="yt-card" onclick="playVideoInUI('jNQXAC9IVRw')">
+                                <img class="yt-thumb" src="https://img.youtube.com/vi/jNQXAC9IVRw/hqdefault.jpg" alt="Miniaturka">
+                                <div class="yt-info">▶ Me at the zoo (Pierwszy film na YT)</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            // 3. ZAKŁADKA WSZYSTKO - Ekran główny i wyniki
+            resultsContainer.innerHTML = `
+                <p style="font-size: 14px; color: #94a3b8; margin-bottom: 15px;">
+                    ${rawQuery ? `Wyniki w iPhone 8 UI dla: "<strong>${rawQuery}</strong>"` : 'Szybki start w iPhone 8 Web:'}
+                </p>
+                <div class="yt-videos-grid">
+                    <div class="yt-card" onclick="setTab('video')">
+                        <img class="yt-thumb" src="https://img.youtube.com/vi/DOUmHIhkvbU/hqdefault.jpg" alt="YouTube">
+                        <div class="yt-info">🔴 Otwórz odtwarzacz YouTube (wbudowany w stronę)</div>
+                    </div>
+                    <div class="yt-card" onclick="setTab('images')">
+                        <img class="yt-thumb" src="https://picsum.photos/seed/${seedBase}1/400/300" alt="Grafika">
+                        <div class="yt-info">🖼️ Zobacz galerię zdjęć dla: ${rawQuery || 'Tapety iOS'}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Uruchomienie widoku startowego od razu po załadowaniu strony
+        performSearch();
+
+        searchBtn.addEventListener('click', performSearch);
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+    </script>
 </body>
 </html>
